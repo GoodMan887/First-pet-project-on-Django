@@ -1,0 +1,74 @@
+[
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "name": "Худи черного цвета с монограммами adidas Originals",
+      "description": "Мягкая ткань для свитшотов. Стиль и комфорт – это образ жизни.",
+      "price": "6090.00",
+      "quantity": 10,
+      "image": "products_images/Adidas-hoodie.png",
+      "category": 1
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+      "name": "Синяя куртка The North Face",
+      "description": "Гладкая ткань. Водонепроницаемое покрытие. Легкий и теплый пуховый наполнитель.",
+      "price": "23725.00",
+      "quantity": 30,
+      "image": "products_images/Blue-jacket-The-North-Face.png",
+      "category": 3
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+      "name": "Коричневый спортивный oversized-топ ASOS DESIGN",
+      "description": "Материал с плюшевой текстурой. Удобный и мягкий.",
+      "price": "3390.00",
+      "quantity": 25,
+      "image": "products_images/Brown-sports-oversized-top-ASOS-DESIGN.png",
+      "category": 1
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+      "name": "Брюки офисные классические прямые на резинке GLY",
+      "description": "Классические брюки женские «бананы» станут идеальным выбором для различных сезонов.",
+      "price": "5990.00",
+      "quantity": 228,
+      "image": "products_images/Gly.jpg",
+      "category": 3
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+      "name": "Туфли на каблуке вечерние на шпильке Rio Fiore",
+      "description": "Женские туфли от бренда Rio Fiore — это больше, чем просто обувь; это воплощение изысканности и роскоши.",
+      "price": "12990.00",
+      "quantity": 445,
+      "image": "products_images/Rio.jpg",
+      "category": 2
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 6,
+    "fields": {
+      "name": "Сумка средняя черная кросс-боди через плечо ABASIMO",
+      "description": "Функциональная, но не очень большая, красивая и при этом практичная о такой женской сумке мечтает каждая.",
+      "price": "2500.00",
+      "quantity": 250,
+      "image": "products_images/Bag.jpg",
+      "category": 4
+    }
+  }
+]

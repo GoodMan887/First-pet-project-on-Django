@@ -1,0 +1,7 @@
+[flake8]
+
+# Исключения
+exclude =
+    migrations
+
+max-line-length = 120
