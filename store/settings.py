@@ -13,9 +13,7 @@ from pathlib import Path
 
 import environ
 
-# Перенос переменных из .env
 env = environ.Env(
-    # set casting, default value
     DEBUG=(bool),
     SECRET_KEY=(str),
     DOMAIN_NAME=(str),
@@ -68,11 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    # 'django.contrib.sites',  # for allauth
 
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount.providers.github',
     'debug_toolbar',
     'django_extensions',
     'rest_framework',
@@ -93,8 +87,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-
-    # 'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'store.urls'
@@ -139,14 +131,6 @@ CACHES = {
 }
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 DATABASES = {
     "default": {
@@ -218,10 +202,6 @@ LOGIN_URL = '/users/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-# Celery (doesn't work)
-# CELERY_BROKER_URL = f'redis://{REDIS_HOST:{REDIS_PORT}}'
-# CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST:{REDIS_PORT}}'
-
 # Stripe
 
 STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY')
@@ -237,32 +217,3 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
 }
-
-# Sending emails
-
-# FAILURE with EmailVerification
-# if DEBUG:
-#     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# else:
-#     EMAIL_HOST = env('EMAIL_HOST')
-#     EMAIL_PORT = env('EMAIL_PORT')
-#     EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-#     EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-#     EMAIL_USE_SSL = env('EMAIL_USE_SSL')
-
-# OAuth - It didn't work
-
-# AUTHENTICATION_BACKENDS = [
-#     'django.contrib.auth.backends.ModelBackend',
-#     'allauth.account.auth_backends.AuthenticationBackend',
-# ]
-#
-# SITE_ID = 1
-#
-# SOCIALACCOUNT_PROVIDERS = {
-#     'github': {
-#         'SCOPE': [
-#             'user',
-#         ]
-#     },
-# }

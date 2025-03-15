@@ -7,12 +7,11 @@ from users.models import User
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-# models = tables
 class ProductCategory(models.Model):
     name = models.CharField(max_length=128, unique=True)
     description = models.TextField(null=True, blank=True)
 
-    class Meta:  # Название на боковой админ панели
+    class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
 
@@ -36,14 +35,13 @@ class Product(models.Model):
     def __str__(self):
         return f"Продукт: {self.name} | Категория: {self.category.name}"
 
-    # Не работает
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.stripe_product_price_id:
-            stripe_product_price = self.create_stripe_product_price()  # Создание цены товара
-            self.stripe_product_price_id = stripe_product_price['id']  # Создание id цены
+            stripe_product_price = self.create_stripe_product_price()
+            self.stripe_product_price_id = stripe_product_price['id']
         super(Product, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
 
-    def create_stripe_product_price(self):  # Создание товаров в stripe
+    def create_stripe_product_price(self):
         stripe_product = stripe.Product.create(name=self.name)
         stripe_product_price = stripe.Price.create(
             product=stripe_product['id'], unit_amount=round(self.price * 100), currency='rub'
@@ -52,15 +50,14 @@ class Product(models.Model):
 
 
 class BaskerQuerySet(models.QuerySet):
-    # Расчёт общей цены и кол-ва товаров в корзине
     def total_sum(
-            self):  # self здесь - обращение к корзине, то же самое baskets = Basket.objects.filter(user=self.user)
+            self):
         return sum(basket.sum() for basket in self)
 
     def total_quantity(self):
         return sum(basket.quantity for basket in self)
 
-    def stripe_products(self):  # Оплата товаров с корзины
+    def stripe_products(self):
         line_items = []
         for basket in self:
             item = {
@@ -72,20 +69,20 @@ class BaskerQuerySet(models.QuerySet):
 
 
 class Basket(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE)  # Связь корзины с пользователем
-    product = models.ForeignKey(to=Product, on_delete=models.CASCADE)  # Связь корзины с продуктом
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField(default=0)
-    created_timestamp = models.DateTimeField(auto_now_add=True)  # Автоматически определяет время создания корзины
+    created_timestamp = models.DateTimeField(auto_now_add=True)
 
     objects = BaskerQuerySet.as_manager()
 
     def __str__(self):
         return f"Корзина для {self.user.username} | Продукт: {self.product.name}"
 
-    def sum(self):  # Цена с учётом кол-ва товаров
+    def sum(self):
         return self.product.price * self.quantity
 
-    def de_json(self):  # Возвращает словарь с данными о корзине
+    def de_json(self):
         basket_item = {
             'product_name': self.product.name,
             'quantity': self.quantity,
@@ -98,11 +95,11 @@ class Basket(models.Model):
     def create_or_update(cls, product_id, user):
         baskets = Basket.objects.filter(user=user, product_id=product_id)
 
-        if not baskets.exists():  # Если товара нет в корзине, то добавляем
+        if not baskets.exists():
             obj = Basket.objects.create(user=user, product_id=product_id, quantity=1)
             is_created = True
             return obj, is_created
-        else:  # Если есть, увеличиваем количество на 1
+        else:
             basket = baskets.first()
             basket.quantity += 1
             basket.save()

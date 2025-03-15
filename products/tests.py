@@ -3,7 +3,10 @@ from http import HTTPStatus
 from django.test import TestCase
 from django.urls import reverse
 
-from products.models import Product, ProductCategory
+from products.models import (
+    Product,
+    ProductCategory,
+)
 
 
 class IndexViewTestCase(TestCase):
@@ -29,7 +32,7 @@ class ProductsListViewTestCase(TestCase):
 
         self._common_tests(response)
         self.assertEqual(list(response.context_data['object_list']),
-                         list(self.products[:3]))  # Проверка наличия товаров
+                         list(self.products[:3]))
 
     def test_list_with_category(self):
         category = ProductCategory.objects.first()

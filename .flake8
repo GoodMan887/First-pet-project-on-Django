@@ -1,6 +1,5 @@
 [flake8]
 
-# Исключения
 exclude =
     migrations
 

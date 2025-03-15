@@ -1,12 +1,18 @@
 from django import forms
-from django.contrib.auth.forms import (AuthenticationForm, UserChangeForm,
-                                       UserCreationForm)
-from django.forms import EmailInput, PasswordInput, TextInput
+from django.contrib.auth.forms import (
+    AuthenticationForm,
+    UserChangeForm,
+    UserCreationForm,
+)
+from django.forms import (
+    EmailInput,
+    PasswordInput,
+    TextInput,
+)
 
 from users.models import User
 
 
-# Authorization
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(widget=TextInput(attrs={
         'class': 'from-control py-4', 'placeholder': "Введите имя пользователя"}))
@@ -35,14 +41,6 @@ class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
-
-    # FAILURE with EmailVerification
-    # def save(self, commit=True):
-    #     user = super(UserRegistrationForm, self).save(commit=True)
-    #     expiration = now() + timedelta(hours=48)
-    #     record = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
-    #     record.send_verification_email()
-    #     return user
 
 
 class UserProfileForm(UserChangeForm):
